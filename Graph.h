@@ -2,20 +2,29 @@
 #define GRAPH_H
 
 #include <iostream>
+#include "string"
 #include <list>
 #include <iterator>
 #include <locale> 
+#include <stack>
+#include <queue>
 
 class Graph
 {
 public:
 	//Constructors/Destructors
-	Graph();
+	Graph(size_t);
 	virtual ~Graph();
 
 	//Functions
 	//Writing to list of lists of integer
-	void enterList(std::list<std::list<int>>&);
+	void enterList();
+	void setNumberOfHeaders(size_t);
+	std::list<std::list<int>>& getList();
+	std::list<std::list<bool>>& getMatrix();
+	//Deep/Breadth search in List Realization
+	std::stack<unsigned int> dFS();
+	std::queue<unsigned int> bFS();
 
 	//Template Functions
 	template<class T>
@@ -23,12 +32,13 @@ public:
 	template<class From, class To>
 	void convert(From&, To&);
 	template<class T>
-	void show(T& data);
+	void show(T&);
 
 private:
 	//List/Matrix
 	std::list<std::list<int>> listOfNeighbors;
 	std::list<std::list<bool>> matrixOfAdjacencies;
+	size_t numberOfHeaders;
 
 };
 

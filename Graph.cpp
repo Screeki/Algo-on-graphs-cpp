@@ -1,9 +1,9 @@
 #include "Graph.h"
 
 //Constructors/Destructors
-Graph::Graph()
+Graph::Graph(size_t nmb)
 {
-
+	this->setNumberOfHeaders(nmb);
 }
 
 Graph::~Graph()
@@ -11,33 +11,51 @@ Graph::~Graph()
 
 }
 
+
 //Functions
-void Graph::enterList(std::list<std::list<int>>& list)
+void Graph::enterList()
 {
 	std::list<int> bufList;
-	int mainHead = 0;
-	size_t kostil, kostil2;
-
-	std::cout << "\nHow much Headers we have? ";
-	std::cin >> kostil2;
-
-	for (size_t j = 0; j < kostil2; j++)
+	for (size_t j = 0; j < this->numberOfHeaders; j++)
 	{
-		std::cout << "\nHow much headers we have for Head " <<
-			mainHead << std::endl;
-		std::cin >> kostil;
-
-		std::cout << "\nEnter(lower to rise) header for " <<
-			mainHead << std::endl;
-		for (size_t i = 0; i < kostil; i++)
-		{
-			int head;
-			std::cin >> head;
-			bufList.push_back(head);
-		}
-		list.push_back(bufList);
+		std::cout << "\nEnter Headers for Head " << j << '\n';
+		std::string str;
+		std::getline(std::cin, str, '\n');
+		for (unsigned i = 0; i < str.length(); ++i)
+			if (str[i] != ' ')
+				bufList.push_back(str[i] - '0');
+		this->listOfNeighbors.push_back(bufList);
 		bufList = {};
-		mainHead++;
+		str = {};
 	}
+}
+
+void Graph::setNumberOfHeaders(size_t nmb)
+{
+	this->numberOfHeaders = nmb;
+}
+
+std::list<std::list<int>>& Graph::getList()
+{
+	return this->listOfNeighbors;
+}
+
+std::list<std::list<bool>>& Graph::getMatrix()
+{
+	return this->matrixOfAdjacencies;
+}
+
+std::stack<unsigned int> Graph::dFS()
+{
+	return std::stack<unsigned int>();
+}
+
+std::queue<unsigned int> Graph::bFS()
+{
+	std::queue<unsigned int> bFSQueue;
+	for (auto i = this->listOfNeighbors.begin(); i != this->listOfNeighbors.end(); i++)
+		for (auto j = i->begin(); j != i->end(); j++)
+			bFSQueue.push(*j);
+	return bFSQueue;
 }
 
