@@ -1,8 +1,14 @@
 #include "Graph.h"
 
-Graph::Graph(size_t arg)
+Graph::Graph(size_t arg = 0)
 {
 	this->nVertice = arg;
+}
+
+Graph::Graph(size_t w, size_t h)
+{
+	this->width = w;
+	this->height = h;
 }
 
 Graph::~Graph()
@@ -56,7 +62,7 @@ void Graph::showMatrix()
 	}
 }
 
-void Graph::bfs(int start)
+void Graph::bfs(int start = 0)
 {
 	queue<int> q;
 	vector<int> visited(this->nVertice);
@@ -76,4 +82,32 @@ void Graph::bfs(int start)
 			}
 		}
 	}
+}
+
+void Graph::findDeWay(int start, int end)
+{
+	queue<int> q;
+	vector<int> visited(this->nVertice);
+	q.push(start);
+	visited[start] = true;
+	while (!q.empty())
+	{
+		int v = q.front();
+		cout << "\n Checked: " << v;
+		q.pop();
+		for (size_t i = 0; i < this->vertice[v].size(); i++)
+		{
+			if (!visited[this->vertice[v][i]])
+			{
+				visited[this->vertice[v][i]] = true;
+				q.push(this->vertice[v][i]);
+				if (this->vertice[v][i] == end)
+				{
+					cout << "\n I know de way.";
+					return;
+				}
+			}
+		}
+	}
+
 }
